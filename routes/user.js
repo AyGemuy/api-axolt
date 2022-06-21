@@ -15,10 +15,10 @@ module.exports = (connection) => {
 
     router.post("/login", (req, res) => {
         // Check if body is valid
-        const { email, password } = req.body;
-        if (!email || !password) return res.sendStatus(400);
+        const { username, password } = req.body;
+        if (!username || !password) return res.sendStatus(400);
 
-        connection.query(`SELECT * FROM \`users\` WHERE \`email\` = ${mysql.escape(email)}`, async (err, results) => {
+        connection.query(`SELECT * FROM \`users\` WHERE \`username\` = ${mysql.escape(email)}`, async (err, results) => {
             if (err) {
                 console.error(err);
                 return res.sendStatus(500);
@@ -31,24 +31,24 @@ module.exports = (connection) => {
 
             const accessToken = jwt.sign({
                 id: user.id,
-                email: email
+                username: username
             }, { expiresIn: "24h" });
 
             res.status(200).json({
                 accessToken: accessToken,
                 id: user.id,
-                email: email
+                username: username
             });
         });
     });
 
     router.post("/register", (req, res) => {
         // Check if body is valid
-        const { email, password } = req.body;
-        if (!email || !password) return res.sendStatus(400);
+        const { username, password } = req.body;
+        if (!username || !password) return res.sendStatus(400);
 
         // Check if user already exists
-        connection.query(`SELECT * FROM users WHERE email = ${mysql.escape(email)}`, (err, result) => {
+        connection.query(`SELECT * FROM users WHERE username = ${mysql.escape(email)}`, (err, result) => {
             if (err) {
                 console.error(err);
                 return res.sendStatus(500);
@@ -58,7 +58,7 @@ module.exports = (connection) => {
             const salt = generateSalt();
             const hashedPassword = crypto.createHash("sha256").update(password + salt + process.env.PASSWORD_PEPPER).digest("hex");
 
-            connection.query(`INSERT INTO users (id, email, hash, salt) VALUES (NULL, ${mysql.escape(email)}, ${mysql.escape(hashedPassword)}, ${mysql.escape(salt)})`, (err2, result2) => {
+            connection.query(`INSERT INTO users (id, username, hash, salt) VALUES (NULL, ${mysql.escape(username)}, ${mysql.escape(hashedPassword)}, ${mysql.escape(salt)})`, (err2, result2) => {
                 if (err2) {
                     console.error(err2);
                     return res.sendStatus(500);
@@ -66,13 +66,13 @@ module.exports = (connection) => {
                 
                 const accessToken = jwt.sign({
                     id: result2.insertId,
-                    email: email
+                    username: username
                 }, { expiresIn: "24h" });
 
                 res.status(201).json({
                     accessToken: accessToken,
                     id: result2.insertId,
-                    email: email
+                    username: username
                 });
             });
         });
