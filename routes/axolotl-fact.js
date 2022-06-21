@@ -4,10 +4,6 @@ module.exports = (connection) => {
     const express = require("express");
     const router = express.Router();
 
-    router.get("/gary-the-axolotl", jwt.authenticateJWT, (req, res) => {
-        res.sendStatus(501); // Not implemented
-    });
-
     router.get("/", jwt.authenticateJWT, (req, res) => {
         res.sendStatus(501); // Not implemented
     });

@@ -24,7 +24,13 @@ app.get("/api", async (req, res) => {
         axolotl_pictures_router: {
             gary_the_axolotl_uri: `${host}/api/axolotl-picture/gary-the-axolotl`,
             get_uri: `${host}/api/axolotl-picture`,
+            get_curated_uri: `${host}/api/axolotl-picture/curated`,
             post_uri: `${host}/api/axolotl-picture`,
+        },
+        axolotl_fact_router: {
+            get_uri: `${host}/api/axolotl-fact`,
+            get_curated_uri: `${host}/api/axolotl-fact/curated`,
+            post_uri: `${host}/api/axolotl-fact`,
         },
         user_router: {
             login_uri: `${host}/api/user/login`,
@@ -44,6 +50,7 @@ const connection = mysql.createConnection({
 connection.connect(() => { console.log("Connected to database"); });
 
 app.use("/api/axolotl-picture", require("./routes/axolotl-picture")(connection));
+app.use("/api/axolotl-fact", require("./routes/axolotl-fact")(connection));
 app.use("/api/user", require("./routes/user")(connection));
 
 app.listen(8080, () => {
