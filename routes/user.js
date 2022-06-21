@@ -79,8 +79,8 @@ module.exports = (connection) => {
     });
 
     router.get("/me", jwt.authenticateJWT, (req, res) => {
-        const { id, email } = req.user;
-        res.json({ id, email });
+        const { id, username } = req.user;
+        res.json({ id, username });
     });
 
     return router;
