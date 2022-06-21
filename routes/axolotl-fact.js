@@ -13,7 +13,11 @@ module.exports = (connection) => {
         res.sendStatus(501); // Not implemented
     });
 
-    router.put("/", jwt.authenticateJWT, (req, res) => { // This will eventually be a premium tier endpoint, costing money to fire
+    router.post("/", jwt.authenticateJWT, (req, res) => { // This will eventually be a premium tier endpoint, costing money to fire
+        res.sendStatus(501); // Not implemented
+    });
+
+    router.post("/report", jwt.authenticateJWT, (req, res) => {
         res.sendStatus(501); // Not implemented
     });
 
