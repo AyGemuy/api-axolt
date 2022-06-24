@@ -1,3 +1,4 @@
+const chalk = require("chalk");
 const jwt = require("jsonwebtoken");
 
 module.exports.authenticateJWT = (req, res, next) => {
@@ -9,6 +10,14 @@ module.exports.authenticateJWT = (req, res, next) => {
         if (err) return res.sendStatus(403); // Forbidden
 
         req.user = user;
+
+        // console.log(`User ${user.username} (id=${user.id}) fired ${req.baseUrl}`);
+        const datetime = new Date();
+        const [ day, month, year ] = [ datetime.getDate(), datetime.getMonth() + 1, datetime.getFullYear() ];
+        const [ hours, minutes, seconds ] = [ datetime.getHours(), datetime.getMinutes(), datetime.getSeconds() ];
+
+        console.log(`${chalk.blue("[")}${day}-${month}-${year} ${hours}:${minutes}:${seconds}${chalk.blue("]")} ${chalk.blue("[")}User ${user.id}: ${user.username}${chalk.blue("]")} fired ${chalk.red(req.originalUrl)}`);
+
         next();
     });
 }

@@ -24,13 +24,17 @@ app.get("/api", async (req, res) => {
         axolotl_pictures_router: {
             gary_the_axolotl_uri: `${host}/api/axolotl-picture/gary-the-axolotl`,
             get_uri: `${host}/api/axolotl-picture`,
+            mine_uri: `${host}/api/axolotl-picture/mine`,
             get_curated_uri: `${host}/api/axolotl-picture/curated`,
             post_uri: `${host}/api/axolotl-picture`,
+            report_uri: `${host}/api/axolotl-picture/report`,
         },
         axolotl_fact_router: {
             get_uri: `${host}/api/axolotl-fact`,
+            mine_uri: `${host}/api/axolotl-fact/mine`,
             get_curated_uri: `${host}/api/axolotl-fact/curated`,
             post_uri: `${host}/api/axolotl-fact`,
+            report_uri: `${host}/api/axolotl-fact/report`,
         },
         user_router: {
             login_uri: `${host}/api/user/login`,
