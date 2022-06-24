@@ -33,7 +33,6 @@ module.exports = (connection) => {
 
     router.get("/mine", jwt.authenticateJWT, (req, res) => {
         // Get my axolotl facts
-        // res.sendStatus(501); // Not implemented
         connection.query(`SELECT * FROM \`axolotl-facts\` WHERE \`author\` = ${mysql.escape(req.user.id)}`, (err, results) => {
             if (err) {
                 console.error(err);
@@ -45,9 +44,29 @@ module.exports = (connection) => {
     });
 
     router.get("/curated", jwt.authenticateJWT, (req, res) => {
-        // TODO: Charge user
-        // Get random axolotl fact, but filter curated only
-        res.sendStatus(501); // Not implemented
+        // Get random curated axolotl fact
+        connection.query(`SELECT * FROM \`axolotl-facts\` WHERE \`status\` = 1 ORDER BY RAND() LIMIT 1`, (err, results) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+
+            let result = {
+                id: results[0].id,
+                content: results[0].content
+            };
+
+            connection.query(`SELECT username FROM \`users\` WHERE \`id\` = ${mysql.escape(results[0].author)}`, (err2, results2) => {
+                if (err2) {
+                    console.error(err2);
+                    return res.sendStatus(500);
+                }
+
+                result.author = results2[0].username;
+                res.send(result); // Result is { id, content, author }
+                // TODO: Charge user
+            });
+        });
     });
 
     router.post("/", jwt.authenticateJWT, (req, res) => {
