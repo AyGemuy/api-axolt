@@ -16,7 +16,7 @@ module.exports.authenticateJWT = (req, res, next) => {
         const [ day, month, year ] = [ datetime.getDate(), datetime.getMonth() + 1, datetime.getFullYear() ];
         const [ hours, minutes, seconds ] = [ datetime.getHours(), datetime.getMinutes(), datetime.getSeconds() ];
 
-        console.log(`${chalk.blue("[")}${day}-${month}-${year} ${hours}:${minutes}:${seconds}${chalk.blue("]")} ${chalk.blue("[")}User ${user.id}: ${user.username}${chalk.blue("]")} fired ${chalk.red(req.originalUrl)}`);
+        console.log(`${chalk.blue("[")}${day}-${month}-${year} ${hours}:${minutes}:${seconds}${chalk.blue("]")} ${chalk.blue("[")}User ${user.id}: ${user.username}${chalk.blue("]")} fired ${chalk.red(req.originalUrl)} with ${chalk.red(JSON.stringify(req.body))}`);
 
         next();
     });

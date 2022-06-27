@@ -18,7 +18,7 @@ module.exports = (connection) => {
         const { username, password } = req.body;
         if (!username || !password) return res.sendStatus(400);
 
-        connection.query(`SELECT * FROM \`users\` WHERE \`username\` = ${mysql.escape(username)}`, (err, results) => {
+        connection.query(`SELECT * FROM users WHERE username = ${mysql.escape(username)}`, (err, results) => {
             if (err) {
                 console.error(err);
                 return res.sendStatus(500);
@@ -53,7 +53,7 @@ module.exports = (connection) => {
                 console.error(err);
                 return res.sendStatus(500);
             }
-            if (result.length > 0) return res.sendStatus(409);
+            if (result.length > 0) return res.sendStatus(409); // Conflict, already exists
 
             const salt = generateSalt();
             const hashedPassword = crypto.createHash("sha256").update(password + salt + process.env.PASSWORD_PEPPER).digest("hex");
