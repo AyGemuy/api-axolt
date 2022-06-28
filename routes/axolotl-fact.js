@@ -116,7 +116,7 @@ module.exports = (connection) => {
                     return res.sendStatus(500);
                 }
 
-                console.log(chalk.yellow(`Fact ${id} has been reported: ${result[0].content}`));
+                console.log(chalk.yellow(`Fact ${id} has been reported ${req.user.username}: ${result[0].content}`));
                 res.sendStatus(200);
             });
         });
