@@ -57,6 +57,6 @@ app.use("/api/axolotl-picture", require("./routes/axolotl-picture")(connection))
 app.use("/api/axolotl-fact", require("./routes/axolotl-fact")(connection));
 app.use("/api/user", require("./routes/user")(connection));
 
-app.listen(8080, () => {
-    console.log("Server started on port 8080");
+app.listen(process.env.PORT || 8080, () => {
+    console.log("Server started");
 });
