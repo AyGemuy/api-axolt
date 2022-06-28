@@ -32,7 +32,7 @@ module.exports = (connection) => {
             const accessToken = jwt.sign({
                 id: user.id,
                 username: username
-            }, { expiresIn: "24h" });
+            });
 
             res.status(200).json({
                 accessToken: accessToken,
@@ -67,7 +67,7 @@ module.exports = (connection) => {
                 const accessToken = jwt.sign({
                     id: result2.insertId,
                     username: username
-                }, { expiresIn: "24h" });
+                });
 
                 res.status(201).json({
                     accessToken: accessToken,
